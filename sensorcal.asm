@@ -271,6 +271,8 @@ cna2:	b16fdiv GyroRollZero, 4
 	b16fdiv GyroPitchZero, 4
 	b16fdiv GyroYawZero, 4
 
+	rvsetflagtrue flagGyrosCalibrated
+
 	ret
 
 

@@ -23,5 +23,5 @@ ShowVersion:
 	
 
 
-sho1:	.db "Version 1.3",0
+sho1:	.db "Version 1.4",0
 sho2:	.db "By Rolf Runar Bakke",0

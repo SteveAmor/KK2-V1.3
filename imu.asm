@@ -14,33 +14,48 @@ Imu:	;--- Get Sensor Data ---
 	b16add AccY, AccY, AccTrimRoll
 
 
+	b16ldi Temper, 0.03				;SF LP filter the accerellometers
+
+	b16sub Error, AccX, AccXfilter
+	b16mul Error, Error, Temper
+	b16add AccXfilter, AccXfilter, Error
+
+	b16sub Error, AccY, AccYfilter
+	b16mul Error, Error, Temper
+	b16add AccYfilter, AccYfilter, Error
+
+	b16sub Error, AccZ, AccZfilter
+	b16mul Error, Error, Temper
+	b16add AccZfilter, AccZfilter, Error
+
+
 	;---  calculate tilt angle with the acc. (this approximation is good to about 20 degrees) --
 
 	b16ldi Temp, 0.7
-	b16mul AccAngleRoll, AccY, Temp
-	b16mul AccAnglePitch, AccX, Temp
+	b16mul AccAngleRoll, AccYfilter, Temp
+	b16mul AccAnglePitch, AccXfilter, Temp
 
 
 	;--- Add correction data to gyro inputs based on difference between Euler angles and acc angles ---
 
-	b16ldi Temp, 10					;skip correction at angles greater than 10
-	b16cmp EulerAnglePitch, Temp
+	b16ldi Temp, 20					;skip correction at angles greater than +-20
+	b16cmp AccAnglePitch, Temp
 	longbrge im40
-	b16cmp EulerAngleRoll, Temp
-	longbrge im40
-
-	b16neg Temp
-	b16cmp EulerAnglePitch, Temp
-	longbrlt im40
-	b16cmp EulerAngleRoll, Temp
-	longbrlt im40
-
-	b16ldi Temp, 40					;skip correction if vertical accelleration is outside 0.7 to 1.3 G
-	b16cmp AccZ, Temp
+	b16cmp AccAngleRoll, Temp
 	longbrge im40
 
 	b16neg Temp
-	b16cmp AccZ, Temp
+	b16cmp AccAnglePitch, Temp
+	longbrlt im40
+	b16cmp AccAngleRoll, Temp
+	longbrlt im40
+
+	b16ldi Temp, 60					;skip correction if vertical accelleration is outside 0.5 to 1.5 G
+	b16cmp AccZfilter, Temp
+	longbrge im40
+
+	b16neg Temp
+	b16cmp AccZfilter, Temp
 	longbrlt im40
 	 
 	b16sub Temp, EulerAngleRoll, AccAngleRoll	;add roll correction
@@ -51,9 +66,12 @@ Imu:	;--- Get Sensor Data ---
 	b16fdiv Temp, 2
 	b16add GyroPitch, GyroPitch, Temp
 
-;	LedOn
+	;rvsetflagtrue flagDebugBuzzerOn
+	rjmp im41
 
-im40:
+im40:	;rvsetflagfalse flagDebugBuzzerOn
+
+im41:
 
 	;--- Rotate up-direction 3D vector with gyro inputs ---
 

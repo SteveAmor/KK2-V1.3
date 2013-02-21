@@ -2,7 +2,7 @@
 HeightDampening:
 
 
-	b16mul Temp, AccZ, HeightDampeningGain	;gain
+	b16mul Temp, AccZfilter, HeightDampeningGain	;gain
 
 	b16mov Temper, HeightDampeningLimit	;limit
 	b16cmp Temp, Temper

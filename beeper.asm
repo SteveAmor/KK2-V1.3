@@ -70,6 +70,7 @@ bee6:
 	;--- turn buzzer on/off depending on flags ---
 
 	rvflagor flagA, flagGeneralBuzzerOn, flagLvaBuzzerOn
+	rvflagor flagA, flagA, flagDebugBuzzerOn
 	rvbrflagtrue flagA, bee3
 	BuzzerOff
 	ret

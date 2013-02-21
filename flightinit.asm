@@ -225,7 +225,8 @@ fli8:	b16store_array FilteredOut1, Temp
 	 
 	rvsetflagfalse flagGeneralBuzzerOn
 	rvsetflagfalse flagLvaBuzzerOn
-
+	rvsetflagfalse flagDebugBuzzerOn
+	rvsetflagfalse flagGyrosCalibrated
 
 	b16clr LiveUpdateTimer
 

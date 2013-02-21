@@ -158,7 +158,9 @@ FixedPointVariableEnumerate168 EulerAnglePitch
 
 FixedPointVariableEnumerate168 Angle
 
-
+FixedPointVariableEnumerate168 AccXfilter
+FixedPointVariableEnumerate168 AccYfilter
+FixedPointVariableEnumerate168 AccZfilter
 
 FixedPointVariableEnumerate824 Theta
 FixedPointVariableEnumerate824 Sine
@@ -301,6 +303,11 @@ RamVariableEnumerate8 flagAutoDisarm
 RamVariableEnumerate8 flagMutePwm
 
 RamVariableEnumerate8 flagCppmOn
+
+RamVariableEnumerate8 flagDebugBuzzerOn
+
+RamVariableEnumerate8 flagGyrosCalibrated
+
 
 RamVariableEnumerate8 CppmPulseStartL
 RamVariableEnumerate8 CppmPulseStartH

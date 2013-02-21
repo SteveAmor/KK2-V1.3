@@ -114,14 +114,16 @@ udp13:
 	lrv Y1, 45
 	mPrintString udp18
 	b16load EulerAngleRoll
+	rvbrflagfalse flagGyrosCalibrated, udp40
  	call Print16Signed 
-
+udp40:
 	lrv X1, 0
 	lrv Y1, 54
 	mPrintString udp19
 	b16load EulerAnglePitch
+	rvbrflagfalse flagGyrosCalibrated, udp41
  	call Print16Signed 
-
+udp41:
 
 udp21:	call LcdUpdate
 
